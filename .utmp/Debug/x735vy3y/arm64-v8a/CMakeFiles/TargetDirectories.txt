@@ -1,0 +1,5 @@
+C:/Users/h517352/Sketches/Rhizoma/Rhizoma three/.utmp/Debug/x735vy3y/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/h517352/Sketches/Rhizoma/Rhizoma three/.utmp/Debug/x735vy3y/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/Users/h517352/Sketches/Rhizoma/Rhizoma three/.utmp/Debug/x735vy3y/arm64-v8a/GameActivity/CMakeFiles/game.dir
+C:/Users/h517352/Sketches/Rhizoma/Rhizoma three/.utmp/Debug/x735vy3y/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+C:/Users/h517352/Sketches/Rhizoma/Rhizoma three/.utmp/Debug/x735vy3y/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
