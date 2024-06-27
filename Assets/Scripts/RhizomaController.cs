@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Vector3 = UnityEngine.Vector3;
 public class RhizomaController : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class RhizomaController : MonoBehaviour
     Vector3 inForce;
 
     public bool Is_Composing=false;
+
 
     RhyzomaRecordingMode MemoryRetainer;
 
@@ -20,55 +23,37 @@ public class RhizomaController : MonoBehaviour
     public bool isJumping, isJumpingAlt, isGrounded = false;
     Vector3 movement;
 
+
+    public float speed = 6.0F;
+    public float jumpSpeed = 8.0F;
+    public float gravity = 20.0F;
+    // Drag & Drop the camera in this field, in the inspector
+    public Transform cameraTransform;
+    private Vector3 moveDirection = Vector3.zero;
+
     void FixedUpdate()
     {
         if (Is_Composing)
         {
-            /*  Controller Mappings */
-            vaxis = Input.GetAxis("Vertical");
-            haxis = Input.GetAxis("Horizontal");
-            isJumping = Input.GetButton("Jump");
-            isJumpingAlt = Input.GetKey(KeyCode.Joystick1Button0);
+            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            moveDirection = cameraTransform.TransformDirection(moveDirection);
+            moveDirection *= speed;
 
-            //Simplified...
-            runningSpeed = vaxis;
+            if (Input.GetButton("Jump"))
+                moveDirection.y = jumpSpeed;
 
+            moveDirection.y -= gravity * Time.deltaTime;
+            print(moveDirection);
+            Body.AddForce(moveDirection * Time.deltaTime);
 
-            if (isGrounded)
-            {
-                movement = new Vector3(0, 0f, runningSpeed * 8);        // Multiplier of 8 seems to work well with Rigidbody Mass of 1.
-                movement = transform.TransformDirection(movement);      // transform correction A.K.A. "Move the way we are facing"
-            }
-            else
-            {
-                movement *= 0.70f;                                      // Dampen the movement vector while mid-air
-            }
-
-            GetComponent<Rigidbody>().AddForce(movement * moveSpeed);   // Movement Force
-
-
-            if ((isJumping || isJumpingAlt) && isGrounded)
-            {
-                Debug.Log(this.ToString() + " isJumping = " + isJumping);
-                Body.AddForce(Vector3.up * 150);
-            }
-
-
-
-            if ((Input.GetAxis("Vertical") != 0f || Input.GetAxis("Horizontal") != 0f) && !isJumping && isGrounded)
-            {
-                if (Input.GetAxis("Vertical") >= 0)
-                    transform.Rotate(new Vector3(0, haxis * rotationSpeed, 0));
-                else
-                    transform.Rotate(new Vector3(0, -haxis * rotationSpeed, 0));
-
-            }
         }
+
 
     }
     void Start()
     {
         Body = GetComponent<Rigidbody>(); //Gain access to the body
+        cameraTransform = Camera.main.transform;
         if (!Is_Composing)
         {
             Ponder();
