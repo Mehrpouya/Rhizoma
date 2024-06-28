@@ -4,6 +4,7 @@ using System.Numerics;
 using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using Vector3 = UnityEngine.Vector3;
 public class RhizomaController : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class RhizomaController : MonoBehaviour
     public Transform cameraTransform;
     private Vector3 moveDirection = Vector3.zero;
 
+    Vector3 prevGaze = Vector3.zero;
+
     void FixedUpdate()
     {
         if (Is_Composing)
@@ -43,8 +46,12 @@ public class RhizomaController : MonoBehaviour
                 moveDirection.y = jumpSpeed;
 
             moveDirection.y -= gravity * Time.deltaTime;
-            print(moveDirection);
             Body.AddForce(moveDirection * Time.deltaTime);
+            //float xAngle = prevGaze.x - Input.mousePosition.x;
+            //float yAngle = prevGaze.y - Input.mousePosition.y;
+            //transform.Rotate(0, xAngle, 0);
+            //transform.Rotate(yAngle, 0, 0);
+            prevGaze = Input.mousePosition;
 
         }
 
@@ -54,6 +61,7 @@ public class RhizomaController : MonoBehaviour
     {
         Body = GetComponent<Rigidbody>(); //Gain access to the body
         cameraTransform = Camera.main.transform;
+        Vector3 prevGaze = Input.mousePosition;
         if (!Is_Composing)
         {
             Ponder();
