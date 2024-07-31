@@ -1,69 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
-using Unity.Android.Gradle.Manifest;
+using Unity.VisualScripting;
+//using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Vector3 = UnityEngine.Vector3;
+
+public enum Mode
+{
+    IsComposing,
+    IsPlaying
+}
 public class RhizomaController : MonoBehaviour
 {
     Rigidbody Body;
     // Start is called before the first frame update
     Vector3 inForce;
 
-    public bool Is_Composing=false;
+    public Mode currentMode;
+    public bool automatic_recording ;
 
+    public string FileNameToReadFrom = "composition.json";
+    public string FileNameToWriteTo = "composition.json";
+    
 
     RhyzomaRecordingMode MemoryRetainer;
+    private FreeCam freeCam_;
+    [Tooltip("Defines how often to save the position -- lower is better resolution")]
+    public float timeInterval = 1.0f;
 
-    float moveSpeed = 2;
-    float rotationSpeed = 4;
-    float runningSpeed;
-    float vaxis, haxis;
-    public bool isJumping, isJumpingAlt, isGrounded = false;
-    Vector3 movement;
+    public int currentReadIndex = 0;
+    //float moveSpeed = 2;
+    //float rotationSpeed = 4;
+    //float runningSpeed;
+    //float vaxis, haxis;
+    //public bool isJumping, isJumpingAlt, isGrounded = false;
+    //Vector3 movement;
 
 
-    public float speed = 6.0F;
-    public float jumpSpeed = 8.0F;
-    public float gravity = 20.0F;
+    //public float speed = 6.0F;
+    //public float jumpSpeed = 8.0F;
+    //public float gravity = 20.0F;
     // Drag & Drop the camera in this field, in the inspector
-    public Transform cameraTransform;
-    private Vector3 moveDirection = Vector3.zero;
+    // public Transform cameraTransform;
 
-    Vector3 prevGaze = Vector3.zero;
-
-    void FixedUpdate()
-    {
-        if (Is_Composing)
-        {
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            moveDirection = cameraTransform.TransformDirection(moveDirection);
-            moveDirection *= speed;
-
-            if (Input.GetButton("Jump"))
-                moveDirection.y = jumpSpeed;
-
-            moveDirection.y -= gravity * Time.deltaTime;
-            Body.AddForce(moveDirection * Time.deltaTime);
-            //float xAngle = prevGaze.x - Input.mousePosition.x;
-            //float yAngle = prevGaze.y - Input.mousePosition.y;
-            //transform.Rotate(0, xAngle, 0);
-            //transform.Rotate(yAngle, 0, 0);
-            prevGaze = Input.mousePosition;
-
-        }
-
-
-    }
+    private float timer;
+  
     void Start()
     {
         Body = GetComponent<Rigidbody>(); //Gain access to the body
-        cameraTransform = Camera.main.transform;
-        Vector3 prevGaze = Input.mousePosition;
-        if (!Is_Composing)
+        freeCam_ = GetComponent<FreeCam>();
+        MemoryRetainer = GetComponent<RhyzomaRecordingMode>();
+        timer = Time.time;
+        
+        freeCam_.enabled = currentMode==Mode.IsComposing;
+        if (currentMode== Mode.IsPlaying)
         {
+            MemoryRetainer.ReadData(FileNameToReadFrom,ref timeInterval);
             Ponder();
         }
     }
@@ -78,46 +74,84 @@ public class RhizomaController : MonoBehaviour
         Body.AddForce(inForce, ForceMode.Impulse);
         print(inForce);
     }
+    
+    
+    
     // Update is called once per frame
     void Update()
     {
-      if(Is_Composing)
+        freeCam_.enabled = currentMode==Mode.IsComposing;
+        if(currentMode==Mode.IsComposing)
         {
-            if(Input.GetKeyDown(KeyCode.R))
+            if (automatic_recording)
             {
-                MemoryRetainer.Record_RMemory(transform.position, 5);
+                if (Time.time - timer > timeInterval)
+                {
+                    timer = Time.time;
+                    MemoryRetainer.Record_RMemory(transform.position, 5);
+                }
+            }
+            else
+            {
+                if(Input.GetKeyDown(KeyCode.R))
+                {
+                    MemoryRetainer.Record_RMemory(transform.position, 5);
+                }
+                
             }
             if (Input.GetKeyDown(KeyCode.T))
             {
-                MemoryRetainer.SaveStringToText();
+                MemoryRetainer.SaveStringToText(FileNameToWriteTo, timeInterval);
+            }
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                MemoryRetainer.ReadData(FileNameToReadFrom, ref timeInterval);
             }
         }  
+        
+        
+        
     }
 
-    void ApplyManualForce()
-    {
-
-
-    }
+   
 
     void Ponder() {
         StartCoroutine(MyCoroutine());
     }
 
-    void EnableManualControl() {
-    
-    }
+
 
         
 
 IEnumerator MyCoroutine()
 {
+    // while (true)
+    // {
+    //         AttendTo();
+    //         Notice(-3, 3, 2);
+    //         // wait for seconds
+    //         yield return new WaitForSeconds(2f);
+    // }
+    var prevPos = transform.position;
+    var newPos = transform.position;
     while (true)
     {
-            AttendTo();
-            Notice(-3, 3, 2);
-            // wait for seconds
-            yield return new WaitForSeconds(2f);
+        if (Time.time - timer > timeInterval)
+        {
+            timer = Time.time;
+            if (currentReadIndex >= MemoryRetainer.RMemory.Count-1)
+                break;
+
+            prevPos = MemoryRetainer.RMemory[currentReadIndex].memoryPlace;
+            newPos = MemoryRetainer.RMemory[currentReadIndex+1].memoryPlace;
+            currentReadIndex++;
+
+        }
+
+        transform.position = Vector3.Lerp(prevPos, newPos, (Time.time - timer)/timeInterval);
+        yield return null;
+        
+        
     }
 }
 }

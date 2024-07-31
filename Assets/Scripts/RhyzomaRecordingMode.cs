@@ -12,7 +12,7 @@ public class RhyzomaRecordingMode :MonoBehaviour
 {
 
 
-    private List<RhizomaRetainer> RMemory = new List<RhizomaRetainer>();
+    public List<RhizomaRetainer> RMemory = new List<RhizomaRetainer>();
     // Start is called before the first frame update
 
     public void Record_RMemory(Vector3 _position, float _volume) { 
@@ -29,11 +29,64 @@ public class RhyzomaRecordingMode :MonoBehaviour
 
         return sb.ToString();
     }
-public void SaveStringToText()
+
+    public void ReadData(string fileName, ref float interval)
+    {
+        
+        // The target file path e.g.
+#if UNITY_EDITOR
+        var folder = Application.streamingAssetsPath;
+
+        if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+#else
+        var folder = Application.persistentDataPath;
+#endif
+        RMemory.Clear();
+        var filePath = Path.Combine(folder, fileName);
+        string dataToLoad = "";
+        using  (FileStream stream = new FileStream(filePath,FileMode.Open))
+        {
+            using (var reader = new StreamReader(stream))
+            {
+                
+                interval = float.Parse(reader.ReadLine());
+                while (true)
+                {
+                    string ln = reader.ReadLine();
+                    if (ln == "endl")
+                        break;
+                    if (ln == ";")
+                    {
+                        RMemory.Add(JsonUtility.FromJson<RhizomaRetainer>(dataToLoad));
+                        
+                        dataToLoad = "";
+                    }
+                    else
+                    {
+                        dataToLoad += ln;
+                    }
+                    
+                }
+            }
+        }
+        
+       
+
+    }
+public void SaveStringToText(string fileName ,float interval)
 {
     // Use the CSV generation from before
-    var content = TranslateMemoryToString();
-
+    string content="";
+    content += interval.ToString();
+    content += '\n';
+    foreach (var con in RMemory)
+    {
+        content += JsonUtility.ToJson(con, true);
+        content += "\n";
+        content += ";\n";
+    }
+    
+    content += "endl";
     // The target file path e.g.
 #if UNITY_EDITOR
     var folder = Application.streamingAssetsPath;
@@ -43,11 +96,14 @@ public void SaveStringToText()
     var folder = Application.persistentDataPath;
 #endif
 
-    var filePath = Path.Combine(folder, "composition" + System.DateTime.Now + ".csv");
+    var filePath = Path.Combine(folder, fileName);
 
-    using (var writer = new StreamWriter(filePath, false))
+    using  (FileStream stream = new FileStream(filePath,FileMode.Create))
     {
-        writer.Write(content);
+        using (var writer = new StreamWriter(stream))
+        {
+            writer.Write(content);
+        }
     }
 
     // Or just

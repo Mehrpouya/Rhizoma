@@ -10,18 +10,10 @@ public class RhizomaRetainer
     public float volume;
     // Start is called before the first frame update
     public RhizomaRetainer() { }
-    public RhizomaRetainer(Vector3 _pos,float _vol) {
-        memoryPlace = _pos;
-        volume = _vol;  
-    }
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public RhizomaRetainer(Vector3 _pos, float _vol)
     {
-        
+        memoryPlace = _pos;
+        volume = _vol;
     }
 }
