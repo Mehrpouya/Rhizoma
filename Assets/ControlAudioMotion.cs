@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ControlAudioMotion : MonoBehaviour
 {
-    private float movementSpeed = 1.0f;
+    public float movementSpeed = 1.0f;
     
     
     // Start is called before the first frame update
@@ -16,6 +16,6 @@ public class ControlAudioMotion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Rotate(transform.up, movementSpeed*Time.deltaTime);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Quaternion = UnityEngine.Quaternion;
+using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
 
@@ -135,10 +137,16 @@ public class RhizomaController : MonoBehaviour
     }
 
 
+    private void OnDisable()
+    {
+        if (currentMode==Mode.IsComposing && AreYouSureButton.CreateWizard())
+        {
+            MemoryRetainer.SaveStringToText(FileNameToWriteTo, timeInterval);
+        };
+    }
 
-        
 
-IEnumerator PonderFromMemory()
+    IEnumerator PonderFromMemory()
 {
     var prevPos = transform.position;
     var newPos = transform.position;
