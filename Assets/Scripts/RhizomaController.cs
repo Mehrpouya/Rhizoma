@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Numerics;
 using Unity.VisualScripting;
 //using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
+
 
 public enum Mode
 {
@@ -31,6 +34,8 @@ public class RhizomaController : MonoBehaviour
     private FreeCam freeCam_;
     [Tooltip("Defines how often to save the position -- lower is better resolution")]
     public float timeInterval = 1.0f;
+
+    public float amountToRewindS = 1.0f;
 
     public int currentReadIndex = 0;
     //float moveSpeed = 2;
@@ -88,14 +93,14 @@ public class RhizomaController : MonoBehaviour
                 if (Time.time - timer > timeInterval)
                 {
                     timer = Time.time;
-                    MemoryRetainer.Record_RMemory(transform.position, 5);
+                    MemoryRetainer.Record_RMemory(transform.position,transform.rotation, 5,1);
                 }
             }
             else
             {
                 if(Input.GetKeyDown(KeyCode.R))
                 {
-                    MemoryRetainer.Record_RMemory(transform.position, 5);
+                    MemoryRetainer.Record_RMemory(transform.position,transform.rotation, 5,1);
                 }
                 
             }
@@ -107,8 +112,18 @@ public class RhizomaController : MonoBehaviour
             {
                 MemoryRetainer.ReadData(FileNameToReadFrom, ref timeInterval);
             }
+            
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                transform.position = MemoryRetainer.Rewind(amountToRewindS, timeInterval);
+                
+            }
+            
+            if(Input.GetKeyDown(KeyCode.P))
+                AudioController.Instance.SyncAllAudioWithAliveTime();
+
+            
         }  
-        
         
         
     }
@@ -116,24 +131,19 @@ public class RhizomaController : MonoBehaviour
    
 
     void Ponder() {
-        StartCoroutine(MyCoroutine());
+        StartCoroutine(PonderFromMemory());
     }
 
 
 
         
 
-IEnumerator MyCoroutine()
+IEnumerator PonderFromMemory()
 {
-    // while (true)
-    // {
-    //         AttendTo();
-    //         Notice(-3, 3, 2);
-    //         // wait for seconds
-    //         yield return new WaitForSeconds(2f);
-    // }
     var prevPos = transform.position;
     var newPos = transform.position;
+    var prevRot = transform.rotation;
+    var newRot = transform.rotation;
     while (true)
     {
         if (Time.time - timer > timeInterval)
@@ -144,11 +154,18 @@ IEnumerator MyCoroutine()
 
             prevPos = MemoryRetainer.RMemory[currentReadIndex].memoryPlace;
             newPos = MemoryRetainer.RMemory[currentReadIndex+1].memoryPlace;
+            prevRot = MemoryRetainer.RMemory[currentReadIndex].memoryOrientation;
+            newRot = MemoryRetainer.RMemory[currentReadIndex+1].memoryOrientation;
+
+            
             currentReadIndex++;
 
         }
 
         transform.position = Vector3.Lerp(prevPos, newPos, (Time.time - timer)/timeInterval);
+        transform.rotation = Quaternion.Lerp(prevRot, newRot, (Time.time - timer)/timeInterval);
+        
+        
         yield return null;
         
         

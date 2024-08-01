@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -15,8 +16,9 @@ public class RhyzomaRecordingMode :MonoBehaviour
     public List<RhizomaRetainer> RMemory = new List<RhizomaRetainer>();
     // Start is called before the first frame update
 
-    public void Record_RMemory(Vector3 _position, float _volume) { 
-      RMemory.Add(new RhizomaRetainer(_position, _volume));
+    public void Record_RMemory(Vector3 _position, Quaternion _rot, float _volume, float _pitch) { 
+      RMemory.Add(new RhizomaRetainer(_position,_rot, _volume, _pitch));
+      
     }
 
     public string TranslateMemoryToString()
@@ -72,6 +74,16 @@ public class RhyzomaRecordingMode :MonoBehaviour
         
        
 
+    }
+
+    public Vector3 Rewind(float seconds,float interval)
+    {
+        int numToDelete = (int)Math.Floor(seconds / interval);
+        for(int i = 0;i<numToDelete;i++)
+            if(RMemory.Count>1)
+                RMemory.RemoveAt(RMemory.Count-1);
+        
+        return RMemory[RMemory.Count-1].memoryPlace;
     }
 public void SaveStringToText(string fileName ,float interval)
 {
