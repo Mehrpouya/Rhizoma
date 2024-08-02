@@ -30,16 +30,15 @@ public class RhizomaController : MonoBehaviour
 
     public string FileNameToReadFrom = "composition.json";
     public string FileNameToWriteTo = "composition.json";
+
+    public float PitchOffset=0.0f;
+    public float VolumeOffset=0.0f;
+    private float pitchOffsetOld_, volumeOffsetOld_;
     
-
-    RhyzomaRecordingMode MemoryRetainer;
+    RhizomaRecorder MemoryRetainer;
     private FreeCam freeCam_;
-    [Tooltip("Defines how often to save the position -- lower is better resolution")]
-    public float timeInterval = 1.0f;
-
-    public float amountToRewindS = 1.0f;
-
-    public int currentReadIndex = 0;
+    
+    
     //float moveSpeed = 2;
     //float rotationSpeed = 4;
     //float runningSpeed;
@@ -55,18 +54,19 @@ public class RhizomaController : MonoBehaviour
     // public Transform cameraTransform;
 
     private float timer;
-  
+    
+    
     void Start()
     {
         Body = GetComponent<Rigidbody>(); //Gain access to the body
         freeCam_ = GetComponent<FreeCam>();
-        MemoryRetainer = GetComponent<RhyzomaRecordingMode>();
+        MemoryRetainer = GetComponent<RhizomaRecorder>();
         timer = Time.time;
         
         freeCam_.enabled = currentMode==Mode.IsComposing;
         if (currentMode== Mode.IsPlaying)
         {
-            MemoryRetainer.ReadData(FileNameToReadFrom,ref timeInterval);
+            MemoryRetainer.ReadData(FileNameToReadFrom);
             Ponder();
         }
     }
@@ -90,12 +90,14 @@ public class RhizomaController : MonoBehaviour
         freeCam_.enabled = currentMode==Mode.IsComposing;
         if(currentMode==Mode.IsComposing)
         {
+            updateAudio();
+            
             if (automatic_recording)
             {
-                if (Time.time - timer > timeInterval)
+                if (Time.time - timer > MemoryRetainer.timeInterval)
                 {
                     timer = Time.time;
-                    MemoryRetainer.Record_RMemory(transform.position,transform.rotation, 5,1);
+                    MemoryRetainer.Record_RMemory(transform.position,transform.rotation, VolumeOffset,PitchOffset);
                 }
             }
             else
@@ -108,16 +110,16 @@ public class RhizomaController : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.T))
             {
-                MemoryRetainer.SaveStringToText(FileNameToWriteTo, timeInterval);
+                MemoryRetainer.SaveStringToText(FileNameToWriteTo);
             }
             if (Input.GetKeyDown(KeyCode.Y))
             {
-                MemoryRetainer.ReadData(FileNameToReadFrom, ref timeInterval);
+                MemoryRetainer.ReadData(FileNameToReadFrom);
             }
             
             if (Input.GetKeyDown(KeyCode.Backspace))
             {
-                transform.position = MemoryRetainer.Rewind(amountToRewindS, timeInterval);
+                transform.position = MemoryRetainer.Rewind();
                 
             }
             
@@ -130,8 +132,22 @@ public class RhizomaController : MonoBehaviour
         
     }
 
-   
 
+    void updateAudio()
+    {
+        if (Math.Abs(volumeOffsetOld_ - VolumeOffset)>0.0001f)
+        {
+            AudioController.Instance.SetVolume(VolumeOffset);
+            volumeOffsetOld_ = VolumeOffset;
+        }
+        
+        
+        if (Math.Abs(pitchOffsetOld_ - PitchOffset)>0.0001f)
+        {
+            AudioController.Instance.SetPitch(PitchOffset);
+            pitchOffsetOld_ = PitchOffset;
+        }
+    }
     void Ponder() {
         StartCoroutine(PonderFromMemory());
     }
@@ -141,42 +157,49 @@ public class RhizomaController : MonoBehaviour
     {
         if (currentMode==Mode.IsComposing && AreYouSureButton.CreateWizard())
         {
-            MemoryRetainer.SaveStringToText(FileNameToWriteTo, timeInterval);
+            MemoryRetainer.SaveStringToText(FileNameToWriteTo);
         };
     }
 
 
     IEnumerator PonderFromMemory()
-{
-    var prevPos = transform.position;
-    var newPos = transform.position;
-    var prevRot = transform.rotation;
-    var newRot = transform.rotation;
-    while (true)
     {
-        if (Time.time - timer > timeInterval)
+     
+        var currentState = MemoryRetainer.GetState();
+        var nextState = MemoryRetainer.GetState(1);
+        while (true)
         {
-            timer = Time.time;
-            if (currentReadIndex >= MemoryRetainer.RMemory.Count-1)
-                break;
+            if (Time.time - timer > MemoryRetainer.timeInterval)
+            {
+                timer = Time.time;
+                if (MemoryRetainer.currentReadIndex >= MemoryRetainer.RMemory.Count-1)
+                    break;
 
-            prevPos = MemoryRetainer.RMemory[currentReadIndex].memoryPlace;
-            newPos = MemoryRetainer.RMemory[currentReadIndex+1].memoryPlace;
-            prevRot = MemoryRetainer.RMemory[currentReadIndex].memoryOrientation;
-            newRot = MemoryRetainer.RMemory[currentReadIndex+1].memoryOrientation;
+                currentState = MemoryRetainer.GetState();
+                nextState = MemoryRetainer.GetState(1);
+                
+                
+                
+                MemoryRetainer.currentReadIndex++;
 
+            }
+
+            float t = (Time.time - timer) / MemoryRetainer.timeInterval;
             
-            currentReadIndex++;
-
+            transform.position = Vector3.Lerp(currentState.memoryPlace, nextState.memoryPlace, t);
+            transform.rotation = Quaternion.Lerp(currentState.memoryOrientation, nextState.memoryOrientation, t);
+            VolumeOffset = Mathf.Lerp(currentState.volume, nextState.volume, t);
+            PitchOffset = Mathf.Lerp(currentState.pitch, nextState.pitch, t);
+            
+            updateAudio();
+            
+            yield return null;
+            
+            
         }
-
-        transform.position = Vector3.Lerp(prevPos, newPos, (Time.time - timer)/timeInterval);
-        transform.rotation = Quaternion.Lerp(prevRot, newRot, (Time.time - timer)/timeInterval);
-        
-        
-        yield return null;
         
         
     }
-}
+
+    
 }

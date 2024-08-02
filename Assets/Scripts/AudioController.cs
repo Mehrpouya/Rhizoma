@@ -11,7 +11,10 @@ public class AudioController : MonoBehaviour
     public Vector3Int StartTimeHHMMSS;
     public Vector3Int StartDateDDMMYYYY=new Vector3Int(01,08,2024);
     private System.DateTime StartTime;
+
+    public float motionMultiplier = 1;
     public AudioSource[] allAudios;
+    private float[] volumes_, pitches_;
     void Awake()
     {
         Instance = this;
@@ -27,6 +30,14 @@ public class AudioController : MonoBehaviour
 
         StartTime = new System.DateTime(StartDateDDMMYYYY.z,StartDateDDMMYYYY.y,StartDateDDMMYYYY.x,StartTimeHHMMSS.x,StartTimeHHMMSS.y,StartTimeHHMMSS.z);
         allAudios = GetComponentsInChildren<AudioSource>();
+        volumes_ = new float[allAudios.Length];
+        pitches_ = new float[allAudios.Length];
+        
+        for (int i = 0; i < allAudios.Length;i++)
+        {
+            volumes_[i] = allAudios[i].volume;
+            pitches_[i] = allAudios[i].pitch;
+        }
     }
 
     private void Start()
@@ -36,11 +47,14 @@ public class AudioController : MonoBehaviour
 
     public void SetPitch(float value)
     {
-        foreach (var aud in allAudios)
-        {
-            aud.pitch = value;
-        }
-        
+        for (int i = 0 ;i < allAudios.Length;i++)
+            allAudios[i].pitch = value + pitches_[i];
+    }
+    
+    public void SetVolume(float value)
+    {
+        for (int i = 0 ;i < allAudios.Length;i++)
+            allAudios[i].volume = value + volumes_[i];
     }
     
     public void SyncAllAudioWithAliveTime(){

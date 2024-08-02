@@ -9,9 +9,16 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-public class RhyzomaRecordingMode :MonoBehaviour
+public class RhizomaRecorder :MonoBehaviour
 {
 
+    
+    [Tooltip("Defines how often to save the position -- lower is better resolution")]
+    public float timeInterval = 0.5f;
+
+    public float amountToRewindS = 1.0f;
+
+    public int currentReadIndex = 0;
 
     public List<RhizomaRetainer> RMemory = new List<RhizomaRetainer>();
     // Start is called before the first frame update
@@ -32,7 +39,7 @@ public class RhyzomaRecordingMode :MonoBehaviour
         return sb.ToString();
     }
 
-    public void ReadData(string fileName, ref float interval)
+    public void ReadData(string fileName)
     {
         
         // The target file path e.g.
@@ -51,7 +58,7 @@ public class RhyzomaRecordingMode :MonoBehaviour
             using (var reader = new StreamReader(stream))
             {
                 
-                interval = float.Parse(reader.ReadLine());
+                timeInterval = float.Parse(reader.ReadLine());
                 while (true)
                 {
                     string ln = reader.ReadLine();
@@ -76,55 +83,60 @@ public class RhyzomaRecordingMode :MonoBehaviour
 
     }
 
-    public Vector3 Rewind(float seconds,float interval)
+    public Vector3 Rewind()
     {
-        int numToDelete = (int)Math.Floor(seconds / interval);
+        int numToDelete = (int)Math.Floor(amountToRewindS / timeInterval);
         for(int i = 0;i<numToDelete;i++)
             if(RMemory.Count>1)
                 RMemory.RemoveAt(RMemory.Count-1);
         
         return RMemory[RMemory.Count-1].memoryPlace;
     }
-public void SaveStringToText(string fileName ,float interval)
-{
-    // Use the CSV generation from before
-    string content="";
-    content += interval.ToString();
-    content += '\n';
-    foreach (var con in RMemory)
+    public void SaveStringToText(string fileName )
     {
-        content += JsonUtility.ToJson(con, true);
-        content += "\n";
-        content += ";\n";
+        // Use the CSV generation from before
+        string content="";
+        content += timeInterval.ToString();
+        content += '\n';
+        foreach (var con in RMemory)
+        {
+            content += JsonUtility.ToJson(con, true);
+            content += "\n";
+            content += ";\n";
+        }
+        
+        content += "endl";
+        // The target file path e.g.
+    #if UNITY_EDITOR
+        var folder = Application.streamingAssetsPath;
+
+        if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+    #else
+        var folder = Application.persistentDataPath;
+    #endif
+
+        var filePath = Path.Combine(folder, fileName);
+
+        using  (FileStream stream = new FileStream(filePath,FileMode.Create))
+        {
+            using (var writer = new StreamWriter(stream))
+            {
+                writer.Write(content);
+            }
+        }
+
+        // Or just
+        //File.WriteAllText(content);
+
+        Debug.Log($"CSV file written to \"{filePath}\"");
+
+    #if UNITY_EDITOR
+        AssetDatabase.Refresh();
+    #endif
     }
     
-    content += "endl";
-    // The target file path e.g.
-#if UNITY_EDITOR
-    var folder = Application.streamingAssetsPath;
-
-    if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
-#else
-    var folder = Application.persistentDataPath;
-#endif
-
-    var filePath = Path.Combine(folder, fileName);
-
-    using  (FileStream stream = new FileStream(filePath,FileMode.Create))
+    public RhizomaRetainer GetState(int Offset=0)
     {
-        using (var writer = new StreamWriter(stream))
-        {
-            writer.Write(content);
-        }
+        return RMemory[currentReadIndex + Offset];
     }
-
-    // Or just
-    //File.WriteAllText(content);
-
-    Debug.Log($"CSV file written to \"{filePath}\"");
-
-#if UNITY_EDITOR
-    AssetDatabase.Refresh();
-#endif
-}
 }

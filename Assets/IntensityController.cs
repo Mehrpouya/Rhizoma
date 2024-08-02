@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class ControlAudioMotion : MonoBehaviour
+public class IntensityController : MonoBehaviour
 {
-    public float movementSpeed = 1.0f;
+    [FormerlySerializedAs("speedAmplifier")] 
+    public float motionAmplifier = 1.0f;
+    
     
     
     // Start is called before the first frame update
@@ -16,6 +19,6 @@ public class ControlAudioMotion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(transform.up, movementSpeed*Time.deltaTime);
+        //transform.Rotate(transform.up, movementSpeed*Time.deltaTime);
     }
 }
