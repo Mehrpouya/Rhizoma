@@ -229,6 +229,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 5_Rhizoma_Intensity_2_Inside_Piano
       objectReference: {fileID: 0}
+    - target: {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7868393509019847207, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_Pivot.x
@@ -337,7 +342,7 @@ PrefabInstance:
     - target: {fileID: 8158107292431930498, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_fontSize
-      value: 10
+      value: 8.8
       objectReference: {fileID: 0}
     - target: {fileID: 8212724214537498303, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -354,7 +359,8 @@ PrefabInstance:
       propertyPath: rolloffMode
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -565,6 +571,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 7_Rhizoma_Intensity_2_Piano_Whale (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7868393509019847207, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_Pivot.x
@@ -673,7 +684,7 @@ PrefabInstance:
     - target: {fileID: 8158107292431930498, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_fontSize
-      value: 10
+      value: 8.8
       objectReference: {fileID: 0}
     - target: {fileID: 8212724214537498303, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -690,7 +701,8 @@ PrefabInstance:
       propertyPath: rolloffMode
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -1187,6 +1199,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 11_Rhizoma_Intensity_3_4_Piano_nostalgia
       objectReference: {fileID: 0}
+    - target: {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7868393509019847207, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1295,7 +1312,7 @@ PrefabInstance:
     - target: {fileID: 8158107292431930498, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_fontSize
-      value: 10
+      value: 8.8
       objectReference: {fileID: 0}
     - target: {fileID: 8212724214537498303, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -1312,7 +1329,8 @@ PrefabInstance:
       propertyPath: rolloffMode
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -1345,6 +1363,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 6_Rhizoma_Intensity_2_Piano keyboard_And_inside
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7868393509019847207, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -1454,7 +1477,7 @@ PrefabInstance:
     - target: {fileID: 8158107292431930498, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_fontSize
-      value: 10
+      value: 8.8
       objectReference: {fileID: 0}
     - target: {fileID: 8212724214537498303, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -1471,7 +1494,8 @@ PrefabInstance:
       propertyPath: rolloffMode
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -1593,6 +1617,194 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 442865664}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &450194701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 450194706}
+  - component: {fileID: 450194705}
+  - component: {fileID: 450194704}
+  - component: {fileID: 450194703}
+  - component: {fileID: 450194702}
+  - component: {fileID: 450194707}
+  m_Layer: 0
+  m_Name: Overtone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &450194702
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450194701}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 2.11
+  MaxDistance: 2.59
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.814
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.61388886
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &450194703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450194701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53c8adc20bfe94222a20e74d6d1ca0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voiceName: en-gb-cori-high
+  speakerId: 0
+--- !u!114 &450194704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450194701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb1eb0f3a0f2b456882f6776aa6644e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Engine: {fileID: 450194705}
+  Voice: {fileID: 450194703}
+  source: {fileID: 450194702}
+--- !u!114 &450194705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450194701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f04d0d7f3d8bb4a7caaa42f37f6c8b72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &450194706
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450194701}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -40, y: -8, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &450194707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450194701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 894988c101798cc4e97e1b0852aad6bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 450194704}
+  source: {fileID: 450194702}
 --- !u!1 &470335118
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,6 +2493,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 9_Rhizoma_Intensity_3_4_Bubbles_Rain
       objectReference: {fileID: 0}
+    - target: {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7868393509019847207, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2389,7 +2606,7 @@ PrefabInstance:
     - target: {fileID: 8158107292431930498, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_fontSize
-      value: 10
+      value: 8.8
       objectReference: {fileID: 0}
     - target: {fileID: 8212724214537498303, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -2406,7 +2623,8 @@ PrefabInstance:
       propertyPath: rolloffMode
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -2573,6 +2791,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 12_Rhizoma_Intesity_1_Poem_Aftab
       objectReference: {fileID: 0}
+    - target: {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7868393509019847207, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2681,7 +2904,7 @@ PrefabInstance:
     - target: {fileID: 8158107292431930498, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_fontSize
-      value: 10
+      value: 8.8
       objectReference: {fileID: 0}
     - target: {fileID: 8212724214537498303, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -2698,7 +2921,8 @@ PrefabInstance:
       propertyPath: rolloffMode
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -2899,6 +3123,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 10_Rhizoma_Intensity_3_4_Laura_Piano
       objectReference: {fileID: 0}
+    - target: {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7868393509019847207, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_Pivot.x
@@ -3007,7 +3236,7 @@ PrefabInstance:
     - target: {fileID: 8158107292431930498, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_fontSize
-      value: 10
+      value: 8.8
       objectReference: {fileID: 0}
     - target: {fileID: 8212724214537498303, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -3024,7 +3253,8 @@ PrefabInstance:
       propertyPath: rolloffMode
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -3051,6 +3281,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 3_Rhizoma_Intensity_1_2_Mechanical_Clocks (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7868393509019847207, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -3160,7 +3395,7 @@ PrefabInstance:
     - target: {fileID: 8158107292431930498, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_fontSize
-      value: 10
+      value: 8.8
       objectReference: {fileID: 0}
     - target: {fileID: 8212724214537498303, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -3177,7 +3412,8 @@ PrefabInstance:
       propertyPath: rolloffMode
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -4160,7 +4396,7 @@ Transform:
   m_GameObject: {fileID: 1177450094}
   serializedVersion: 2
   m_LocalRotation: {x: 0.10614761, y: 0, z: 0, w: 0.99435043}
-  m_LocalPosition: {x: -38.4, y: -7.8, z: -12.33}
+  m_LocalPosition: {x: -39.81, y: -7.8, z: -12.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4766,6 +5002,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 7_Rhizoma_Intensity_2_Piano_Whale
       objectReference: {fileID: 0}
+    - target: {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7868393509019847207, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_Pivot.x
@@ -4874,7 +5115,7 @@ PrefabInstance:
     - target: {fileID: 8158107292431930498, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_fontSize
-      value: 10
+      value: 8.8
       objectReference: {fileID: 0}
     - target: {fileID: 8212724214537498303, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -4891,7 +5132,8 @@ PrefabInstance:
       propertyPath: rolloffMode
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -4930,6 +5172,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 3_Rhizoma_Intensity_1_2_Mechanical_Clocks
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7868393509019847207, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -5039,7 +5286,7 @@ PrefabInstance:
     - target: {fileID: 8158107292431930498, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
       propertyPath: m_fontSize
-      value: 10
+      value: 8.8
       objectReference: {fileID: 0}
     - target: {fileID: 8212724214537498303, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -5056,7 +5303,8 @@ PrefabInstance:
       propertyPath: rolloffMode
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -5149,7 +5397,7 @@ Transform:
   m_GameObject: {fileID: 1715422843}
   serializedVersion: 2
   m_LocalRotation: {x: 0.10614761, y: 0, z: 0, w: 0.99435043}
-  m_LocalPosition: {x: -38.4, y: -7.8, z: -12.33}
+  m_LocalPosition: {x: -39.81, y: -7.8, z: -12.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5213,6 +5461,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 1_Rhizoma_Intensity_1_Bird_Chorus_Piano_Messiaen Inspired_Owl_Bat_Electricity
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7868393509019847207, guid: 5121f9216fb864f498d01b11b7b18931,
         type: 3}
@@ -5339,7 +5592,8 @@ PrefabInstance:
       propertyPath: rolloffMode
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6775565632520539170, guid: 5121f9216fb864f498d01b11b7b18931, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -5934,7 +6188,7 @@ PrefabInstance:
     - target: {fileID: 7769850938283757085, guid: 29f8ecfdf260fa441a15f45de360c907,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -38.4
+      value: -39.81
       objectReference: {fileID: 0}
     - target: {fileID: 7769850938283757085, guid: 29f8ecfdf260fa441a15f45de360c907,
         type: 3}
@@ -6008,3 +6262,4 @@ SceneRoots:
   - {fileID: 923068402}
   - {fileID: 652767826}
   - {fileID: 994745533}
+  - {fileID: 450194706}
