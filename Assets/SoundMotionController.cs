@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class SoundMotionController : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class SoundMotionController : MonoBehaviour
 
     public float speed = 1.0f;
     public float enhancement;
+
+    public VideoClip clip;
+    public float fadeSpeed = 1;
+    public Color fadeToColor;
     
     private IntensityController parentController;
     // Start is called before the first frame update
