@@ -12,6 +12,11 @@ namespace Assets.Overtone.Scripts
         public TTSVoiceNative VoiceModel { get; private set; }
         void Update()
         {
+           UpdateVoiceName();
+        }
+
+        public void UpdateVoiceName()
+        {
             if (voiceName != oldVoiceName)
             {
                 oldVoiceName = voiceName;

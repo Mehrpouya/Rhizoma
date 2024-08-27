@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 5668e2d97d6b6eb49b5303b7b9b1d2b0
+labels:
+- Desert
+- Dunes
+- Landscape
+- Sahara
+- Terrain
+timeCreated: 1475361717
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 72780
+  packageName: Sahara Desert Landscape
+  packageVersion: 1.0
+  assetPath: Assets/Sahara Desert/Terrain/Terrain.prefab
+  uploadId: 139776

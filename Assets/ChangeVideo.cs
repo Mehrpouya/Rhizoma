@@ -23,7 +23,7 @@ public class ChangeVideo : MonoBehaviour
         {
             if (smc.clip)
             {
-                VideoManager.Instance.Fade(smc.clip, smc.fadeToColor, smc.fadeSpeed);
+                VideoManager.Instance.Fade(smc.clip, smc.fadeToColor, smc.fadeSpeed, smc.Looping);
             }
         }
     }

@@ -3,9 +3,32 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 using LeastSquares.Overtone;
 using System.Collections;
+using System.Collections.Generic;
+using Assets.Overtone.Scripts;
+
+
+
+[Serializable]
+public struct RhizomaSpeech
+{
+    public string text;
+    public int voiceIndex;
+    public float pitch;
+    public float delay;
+
+   
+}
+
 
 
 public class RhizomaVoices : MonoBehaviour
@@ -13,34 +36,183 @@ public class RhizomaVoices : MonoBehaviour
     public TTSPlayer _player;
     public AudioSource source;
 
+    public List<RhizomaSpeech> Speeches;
+
+    
+    string[] voices =
+    {
+        "en-gb-alan-medium",
+        "en-gb-alba-medium",
+        "en-gb-aru-medium",
+        "en-gb-cori-high",
+        "en-gb-jenny_dioco-medium",
+        "en-gb-northern_english_male-medium",
+        "en-gb-semaine-medium",
+        "en-us-libritts-high",
+        "fa-ir-amir-medium",
+    };
     // Start is called before the first frame update
     void Start()
-        {
+    {
         //        // Asynchronous operation
         if (!_player.Engine.Loaded) {
             Debug.Log("error!");
             return; 
         }
-        }
+    }
 
     // Update is called once per frame
     void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.L))
         {
-        if (Input.GetKeyUp(KeyCode.L)){
+           WriteToFile("");
+        }
+
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            ReadFromFile();
+            StopCoroutine(ThinkIt());
             StartCoroutine(ThinkIt());
         }
-        }
-    IEnumerator ThinkIt()
+    }
+
+    IEnumerator ThinkIt(float delay = 0.0f)
     {
-        SayIt();
-        yield return new WaitForSeconds(5f);
+        for (int i = 0; i < Speeches.Count; i++)
+        {
+            SayIt(i);
+            print("checking "+ source.clip.length);
+            yield return new WaitForSeconds(Speeches[i].delay + source.clip.length);
+            
+        }
 
     }
-    async void SayIt() {
-        await _player.Speak("let's talk about joy later. They got such mixed-up life that it would take a Iong time to get to know them properly It felt ages, i did really missed you. i also managed to have a good time by myself. Time was bending in my metal intestines, still enjoying our little laughter together,. Are you ok? You seem Little anxious or tense, i can just feel it. I'm sorry i didn't mean to introu hahahah ahahahahahahahahahahahaha hah\r\n\r\nhah hahahaha hahhhhhhhhhh\r\n\r\nother irony. intrude also got crush at the end of last line, not including my yful, running and skating and parkouring over the last line. Oh excuse me, cum-- I beg your parden, Excuse me, here, yes down here. Do you mind using that hard, cold, metal teeth over my tuner, please hurry up, but also take your time. Enjoy it you know. But please let’s remember about boundaries. Hello CellloW, He he hehehe Hello....HHHHHoooohh ecelelelelhohoooo, Hello# HELLO! rry, I forgot to introduce myself. Remember, they don't like to get picked up. ps, de just missed to givell him another energy boost. You know what! re's an idea. they ran out of energy, so why not use the time to talk more abo out us? and then give them a ring or energy boost or whatever you wanna call t, they'd be back and it'd be like nothing happened. But that means we get toh other a little bit more. Well do I ever reminicse about some cool, or provoking, bending, hammering, touching, infuriating sentences. well\r\n");
+    async void SayIt(int id)
+    {
+        _player.Voice.voiceName = voices[Speeches[id].voiceIndex];
+        _player.Voice.UpdateVoiceName();
+        await _player.Speak(Speeches[id].text);
         AudioClip audioClip = _player.source.clip;
         source.clip = audioClip;
+        source.pitch = Speeches[id].pitch;
         source.loop = false;
         source.Play();
+    }
+
+
+
+    void WriteToFile(string s)
+    {
+        Speeches.Clear();
+        RhizomaSpeech rs = new RhizomaSpeech();
+        foreach (var c in s)
+        {
+
+            if (c == '\n')
+            {
+                Speeches.Add(rs);
+                rs = new RhizomaSpeech();
+                rs.delay = 300;
+                rs.pitch = 1;
+                rs.voiceIndex = 3;
+            }
+            else
+            {
+                rs.text += c;
+            }
+                
+        }
+
+        // accomodating for edge cases
+        if(s[s.Length-1] != '\n')
+            Speeches.Add(rs);
+
+       WriteListToJsonFile<RhizomaSpeech>(Speeches, "speeches.json");
+
+    }
+
+    void ReadFromFile()
+    {
+        ReadFromJsonFile(ref Speeches,"speeches.json");
+    }
+    void WriteListToJsonFile<T>(List<T> lst, string fileName)
+    {
+        string content = "";
+        foreach (var speech in lst)
+        {
+            content += JsonUtility.ToJson(speech, true);
+            content += "\n";
+            content += ";\n";
+
+        }
+        content += "endl";
+        
+#if UNITY_EDITOR
+        var folder = Application.streamingAssetsPath;
+
+        if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+#else
+        var folder = Application.persistentDataPath;
+#endif
+
+        var filePath = Path.Combine(folder, fileName);
+
+        using  (FileStream stream = new FileStream(filePath,FileMode.Create))
+        {
+            using (var writer = new StreamWriter(stream))
+            {
+                writer.Write(content);
+            }
+        }
+
+        // Or just
+        //File.WriteAllText(content);
+
+        Debug.Log($"Json file written to \"{filePath}\"");
+
+#if UNITY_EDITOR
+        AssetDatabase.Refresh();
+#endif
+    }
+    
+    void ReadFromJsonFile<T>(ref List<T> lst,string fileName)
+    {
+        
+        // The target file path e.g.
+#if UNITY_EDITOR
+        var folder = Application.streamingAssetsPath;
+
+        if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+#else
+        var folder = Application.persistentDataPath;
+#endif
+        lst.Clear();
+        var filePath = Path.Combine(folder, fileName);
+        string dataToLoad = "";
+        using  (FileStream stream = new FileStream(filePath,FileMode.Open))
+        {
+            using (var reader = new StreamReader(stream))
+            {
+                while (true)
+                {
+                    string ln = reader.ReadLine();
+                    if (ln == "endl")
+                        break;
+                    if (ln == ";")
+                    {
+                        lst.Add(JsonUtility.FromJson<T>(dataToLoad));
+                        
+                        dataToLoad = "";
+                    }
+                    else
+                    {
+                        dataToLoad += ln;
+                    }
+                    
+                }
+            }
+        }
+
     }
 }

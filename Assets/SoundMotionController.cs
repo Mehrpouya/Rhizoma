@@ -17,6 +17,7 @@ public class SoundMotionController : MonoBehaviour
     public VideoClip clip;
     public float fadeSpeed = 1;
     public Color fadeToColor;
+    public bool Looping = false;
     
     private IntensityController parentController;
     // Start is called before the first frame update
