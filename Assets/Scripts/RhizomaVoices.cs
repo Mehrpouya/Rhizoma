@@ -38,6 +38,7 @@ public class RhizomaVoices : MonoBehaviour
 
     public List<RhizomaSpeech> Speeches;
 
+    private Task task;
     
     string[] voices =
     {
@@ -66,33 +67,56 @@ public class RhizomaVoices : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.L))
         {
-           WriteToFile("");
+           //WriteToFile("");
         }
 
         if (Input.GetKeyUp(KeyCode.R))
         {
             ReadFromFile();
-            StopCoroutine(ThinkIt());
+            //StopCoroutine(ThinkIt());
             StartCoroutine(ThinkIt());
         }
     }
 
-    IEnumerator ThinkIt(float delay = 0.0f)
+    IEnumerator ThinkIt()
     {
+        // Prepare first audioclip
+        PrepareIt(0);
         for (int i = 0; i < Speeches.Count; i++)
         {
+            // Speak the perpared words
             SayIt(i);
-            print("checking "+ source.clip.length);
-            yield return new WaitForSeconds(Speeches[i].delay + source.clip.length);
+            
+            // Sync task with main thread
+            yield return new WaitUntil(() => task.IsCompleted);
+            
+            // Wait until this current clip has finished speaking
+            yield return new WaitForSeconds(source.clip.length);
+            
+            // Prepare next audioclip async before starting the delay
+            if(i+1!=Speeches.Count)
+                 PrepareIt(i+1);
+            
+            yield return new WaitForSeconds(Speeches[i].delay);
             
         }
 
     }
-    async void SayIt(int id)
+
+    void PrepareIt(int id)
     {
+        // Change voice according to speech requirement
         _player.Voice.voiceName = voices[Speeches[id].voiceIndex];
         _player.Voice.UpdateVoiceName();
-        await _player.Speak(Speeches[id].text);
+        // Start async task to create the audioclip from tts
+        task =  _player.Speak(Speeches[id].text);
+    }
+    async Task SayIt(int id)
+    {
+        // Sync task before moving onto setting the attributes
+        await task;
+        
+        // Set audiosource clip and info from generated file
         AudioClip audioClip = _player.source.clip;
         source.clip = audioClip;
         source.pitch = Speeches[id].pitch;
