@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 0.57
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 82b660520bdecce4daf45d270ec93fe4, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1599,8 +1599,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 1421199906}
-  m_Resource: {fileID: 1421199906}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2358,7 +2358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b69eb3f1c55974bb1bcc1dbc547a11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GUIID: 120526
+  GUIID: 40996
 --- !u!4 &516785024
 Transform:
   m_ObjectHideFlags: 0
@@ -5650,46 +5650,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 842112835}
   m_PrefabAsset: {fileID: 0}
---- !u!83 &1421199906
-AudioClip:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: "other irony. intrude also got crush at the end of last line, not including
-    my yful, running and skating and parkouring over the last line. Oh excuse me,
-    cum-- I beg your parden, Excuse me, here, yes down here. Do you mind using that
-    hard, cold, metal teeth over my tuner, please hurry up, but also take your time.
-    Enjoy it you know. But please let\u2019s remember about boundaries. Hello CellloW,
-    He he hehehe Hello....HHHHHoooohh ecelelelelhohoooo, Hello# HELLO! rry, I forgot
-    to introduce myself. Remember, they don't like to get picked up. ps, de just
-    missed to givell him another energy boost. You know what! re's an idea. they
-    ran out of energy, so why not use the time to talk more abo out us? and then
-    give them a ring or energy boost or whatever you wanna call t, they'd be back
-    and it'd be like nothing happened. But that means we get toh other a little bit
-    more. Well do I ever reminicse about some cool, or provoking, bending, hammering,
-    touching, infuriating sentences. well\r"
-  m_LoadType: 0
-  m_Channels: 1
-  m_Frequency: 22050
-  m_BitsPerSample: 32
-  m_Length: 0
-  m_IsTrackerFormat: 0
-  m_Ambisonic: 0
-  m_SubsoundIndex: 0
-  m_PreloadAudioData: 1
-  m_LoadInBackground: 0
-  m_Legacy3D: 0
-  m_Resource:
-    m_Source: 
-    m_Offset: 0
-    m_Size: 0
-  m_CompressionFormat: 0
-  m_EditorResource:
-    m_Source: 
-    m_Offset: 0
-    m_Size: 0
-  m_EditorCompressionFormat: 0
 --- !u!114 &1477843850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7024,7 +6984,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 0.97
+  m_Intensity: 0.78
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
