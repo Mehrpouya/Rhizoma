@@ -155,7 +155,7 @@ public class RhizomaController : MonoBehaviour
 
     private void OnDisable()
     {
-        if (currentMode==Mode.IsComposing && AreYouSureButton.CreateWizard())
+        if (currentMode==Mode.IsComposing && automatic_recording && AreYouSureButton.CreateWizard())
         {
             MemoryRetainer.SaveStringToText(FileNameToWriteTo);
         };
