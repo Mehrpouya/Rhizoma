@@ -10,6 +10,8 @@ public class RStateThinking : MonoBehaviour
     void Start()
     {
         print("Thinking!");
+        RhizomaVoices.StartTalkingDelegate += SetTextToMesh;
+        RhizomaVoices.FinishedTalkingDelegate += FinishedSpeaking;
 
     }
 
@@ -20,5 +22,16 @@ public class RStateThinking : MonoBehaviour
             print("adding k");
             rText.UpdateText(" k");
         }
+    }
+
+    void SetTextToMesh(string text)
+    {
+        rText.UpdateText(text);
+    }
+
+    void FinishedSpeaking()
+    {
+        rText.CleanUpdateText();
+        rText.UpdateText("");
     }
 }

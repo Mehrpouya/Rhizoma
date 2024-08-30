@@ -16,6 +16,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Overtone.Scripts;
 
+public enum VoiceState
+{
+    idle,
+    talking,
+    finishedTalking
+}
 
 
 [Serializable]
@@ -32,13 +38,21 @@ public struct RhizomaSpeech
 
 
 public class RhizomaVoices : MonoBehaviour
-    {
+{
+    public static VoiceState currentState;
     public TTSPlayer _player;
     public AudioSource source;
 
     public List<RhizomaSpeech> Speeches;
 
     private Task task;
+    
+    public delegate void StartTalkingDel(string text);
+    public static StartTalkingDel StartTalkingDelegate;
+
+    public delegate void FinishedTalkingDel();
+    public static FinishedTalkingDel FinishedTalkingDelegate;
+
     
     string[] voices =
     {
@@ -52,6 +66,9 @@ public class RhizomaVoices : MonoBehaviour
         "en-us-libritts-high",
         "fa-ir-amir-medium",
     };
+    
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -67,7 +84,7 @@ public class RhizomaVoices : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.L))
         {
-           //WriteToFile("");
+           WriteToFile(ReadFromText("HadiText.txt"));
         }
 
         if (Input.GetKeyUp(KeyCode.R))
@@ -86,19 +103,27 @@ public class RhizomaVoices : MonoBehaviour
         {
             // Speak the perpared words
             SayIt(i);
-            
             // Sync task with main thread
             yield return new WaitUntil(() => task.IsCompleted);
             
+            // Talking has started, notify everyone!
+            currentState = VoiceState.talking;
+            if (StartTalkingDelegate != null)
+                StartTalkingDelegate(Speeches[i].text);
+            
             // Wait until this current clip has finished speaking
             yield return new WaitForSeconds(source.clip.length);
+            currentState = VoiceState.finishedTalking;
+            if (FinishedTalkingDelegate != null)
+                FinishedTalkingDelegate();
             
             // Prepare next audioclip async before starting the delay
             if(i+1!=Speeches.Count)
                  PrepareIt(i+1);
             
             yield return new WaitForSeconds(Speeches[i].delay);
-            
+            currentState = VoiceState.idle;
+
         }
 
     }
@@ -130,6 +155,9 @@ public class RhizomaVoices : MonoBehaviour
     {
         Speeches.Clear();
         RhizomaSpeech rs = new RhizomaSpeech();
+        rs.delay = 300;
+        rs.pitch = 1;
+        rs.voiceIndex = 3;
         foreach (var c in s)
         {
 
@@ -152,14 +180,15 @@ public class RhizomaVoices : MonoBehaviour
         if(s[s.Length-1] != '\n')
             Speeches.Add(rs);
 
-       WriteListToJsonFile<RhizomaSpeech>(Speeches, "speeches.json");
+       WriteListToJsonFile<RhizomaSpeech>(Speeches, "HadiSpeeches.json");
 
     }
 
     void ReadFromFile()
     {
-        ReadFromJsonFile(ref Speeches,"speeches.json");
+        ReadFromJsonFile(ref Speeches,"HadiSpeeches.json");
     }
+    
     void WriteListToJsonFile<T>(List<T> lst, string fileName)
     {
         string content = "";
@@ -238,5 +267,33 @@ public class RhizomaVoices : MonoBehaviour
             }
         }
 
+    }
+
+    string ReadFromText(string fileName)
+    {
+        // The target file path e.g.
+#if UNITY_EDITOR
+        var folder = Application.streamingAssetsPath;
+
+        if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+#else
+        var folder = Application.persistentDataPath;
+#endif
+        
+        var filePath = Path.Combine(folder, fileName);
+        string dataToLoad = "";
+        using (FileStream stream = new FileStream(filePath, FileMode.Open))
+        {
+            using (var reader = new StreamReader(stream))
+            {
+                dataToLoad = reader.ReadToEnd();
+                reader.Close();
+            }
+            
+            stream.Close();
+
+        }
+
+        return dataToLoad;
     }
 }
