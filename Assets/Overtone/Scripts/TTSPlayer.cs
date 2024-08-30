@@ -13,8 +13,8 @@ namespace LeastSquares.Overtone
         {
             var audioClip = await Engine.Speak(text, Voice.VoiceModel);
             source.clip = audioClip;
-            source.loop = false;
-            source.Play();
+            //source.loop = false;
+            //source.Play();
         }
     }
 }

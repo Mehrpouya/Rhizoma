@@ -35,14 +35,14 @@ public class VideoManager : MonoBehaviour
         
     }
 
-    public void Fade( VideoClip clip, Color? cq =null,float s = 1)
+    public void Fade( VideoClip clip, Color? cq =null,float s = 1, bool loop = false)
     {
         Color c = cq ?? Color.black;
-        StartCoroutine(FadeNow(clip, c,s));
+        StartCoroutine(FadeNow(clip, c,s, loop));
         
     }
 
-    IEnumerator FadeNow(VideoClip clip, Color c,float s)
+    IEnumerator FadeNow(VideoClip clip, Color c,float s, bool loop)
     {
         //yield return w
         //yield return new WaitForSeconds(s/2);
@@ -57,6 +57,7 @@ public class VideoManager : MonoBehaviour
         
         // Switch clips
         vp.clip = clip;
+        vp.isLooping = loop;
         
         time = Time.unscaledTime;
         while (Time.unscaledTime <= time + (s / 2))
